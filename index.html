@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Projeto Final JS</title>
+</head>
+<body>
+    
+    <header class="container-header">
+        <div class="wrapper">
+            <img src="img/science.png" alt="Logo Advice Panel">
+            <h1><span>Adivce</span> Panel</h1> 
+            <button onclick="openModal('#add-stock')">+ I want an advice</button>
+        </div> 
+    </header>
+
+    <main>
+        <div class="wrapper" id="tickers-list">
+            <div class="ticker">
+                <h2>ADVICE</h2>
+                <p>Remember that spiders are more afraid of you, than you are of them.</p>
+                <div class="botoes">
+                    <button class="btn-edit">edit</button>
+                    <button class="btn-remove">remove</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="modal" id="add-stock">
+            <div class="modal-content">
+                <!-- conteúdo do modal -->
+                <h1>Select an advice</h1>
+                <!-- <button class="btn-close" onclick="closeModal(null, '#add-stock')">x</button> -->
+                <button class="btn-close" id="btnCloseModal">x</button>
+                <form >
+                    <!-- onsubmit faz com que o conteúdo do input seja submetido -->
+                    <label for="ticker">Select 1 to 224:</label>
+                    <input type="text" name="ticker" id="ticker" class="form-modal"/>
+                    <input type="submit" value="Select Advice" class="button-modal" id="button-edit"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal" id="edit-advice">
+            <div class="modal-content">
+                <!-- conteúdo do modal -->
+                <div class="titulo">
+                    <h1>Edit:</h1>
+                    <h2></h2>
+                </div>
+                <!-- <button class="btn-close" onclick="closeModal(null, '#add-stock')">x</button> -->
+                <button class="btn-close" id="btnCloseModalEdit">x</button>
+                <form >
+                    <!-- onsubmit faz com que o conteúdo do input seja submetido -->
+                    <label for="edit">Mensagem</label>
+                    <textarea type="text" name="ticker" id="edit" class="form-modal"></textarea>
+                    <input type="submit" value="Edit Advice" class="button-modal" />
+                </form>
+            </div>
+        </div>
+
+        
+
+    </main>
+
+
+
+    <script src="js/main.js"></script>
+</body>
+</html>
