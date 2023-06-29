@@ -9,20 +9,27 @@ const translation = (evento) => {
     const tag = evento.target.closest('.ticker')
     var adviceContent = tag.querySelector('p')
     
+    console.log(adviceContent.innerText)
     loadTranslation(adviceContent)
-    console.log(loadTranslation(adviceContent))
+    console.log(conselhos)
 }
 
 function loadTranslation(adviceContent) {
     fetch(`https://api.mymemory.translated.net/get?q=${adviceContent.innerText}&langpair=en-GB|pt-BR`)
         .then((res) => res.json())
         .then((data) => {
-            adviceContent.value = data.responseData.translatedText;
+            adviceContent.textContent = data.responseData.translatedText;
+            console.log(data)
+            console.log(data.responseData)
+            console.log(data.responseData.translatedText)
         })
+        localStorage.setItem("conselhos", JSON.stringify(conselhos))
 }
 
 const editarAdvice = (evento) => {
     const tag = evento.target.closest('.ticker')
+    const adviceID = tag.parentNode.parentNode.parentNode
+    const teste = adviceID.querySelector('id')
     const adviceName = tag.querySelector('h2')
     const adviceContent = tag.querySelector('p')
     const modal = document.querySelector('#edit-advice')
@@ -48,6 +55,7 @@ const editarAdvice = (evento) => {
         modal.style.display = "none"
     })
 
+    localStorage.setItem("conselhos", JSON.stringify(conselhos))
 }
 
 const apagarAdvice = (evento) => {
@@ -153,8 +161,7 @@ const advice = async (id) => {
 function criarAdvice(adviceAtual) {
 
     const newAdvice = 
-    `
-    <div class="ticker" id="${adviceAtual.idAdvice}">
+    `<div class="ticker" id="${adviceAtual.idAdvice}">
         <button class="btn-close">x</button>
         <h2>ADVICE #${adviceAtual.idAdvice}</h2>
         <p>${adviceAtual.advice}</p>
@@ -163,8 +170,7 @@ function criarAdvice(adviceAtual) {
             <button class="btn-edit">edit</button>
             <button class="btn-remove">remove</button>
         </div>
-    </div>
-    `
+    </div>`
 
     const listaAdvice = document.querySelector('#tickers-list')
     listaAdvice.innerHTML = listaAdvice.innerHTML + newAdvice
