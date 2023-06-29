@@ -3,36 +3,22 @@ const conselhos = JSON.parse(localStorage.getItem("conselhos")) || []
 const btnCloseModal = document.querySelector('#btnCloseModal')
 const form = document.querySelector('form')
 const editModal = document.querySelector('#edit-advice')
-console.log(editModal)
+const btnTranslate = document.querySelector(".btn-translate")
 
-// const translateAdvice = async () => {
-//     const response = await fetch("https://pt.libretranslate.com/translate", {
-//         method: "POST",
-//         body: JSON.stringify({
-//             q: "kauan is handsome",
-//             source: "auto",
-//             target: "pt",
-//             format: "text",
-//             api_key: ""
-//         }),
-//         headers: { "Content-Type": "application/json" }
-//     })
-//     console.log(await res.json());
-// }
-
-const apagarAdvice = (evento) => {
+const translation = (evento) => {
     const tag = evento.target.closest('.ticker')
-    // removendo a div
-    tag.remove()
-
-    //removendo do local storege
-    //procurando o indice
-    const adviceIndex = conselhos.findIndex(elemento => elemento.id == tag.id)
-    //removendo o objeto
-    conselhos.splice(adviceIndex, 1)
-    //atualizando o local storege
-    localStorage.setItem("conselhos", JSON.stringify(conselhos))
+    var adviceContent = tag.querySelector('p')
     
+    loadTranslation(adviceContent)
+    console.log(loadTranslation(adviceContent))
+}
+
+function loadTranslation(adviceContent) {
+    fetch(`https://api.mymemory.translated.net/get?q=${adviceContent.innerText}&langpair=en-GB|pt-BR`)
+        .then((res) => res.json())
+        .then((data) => {
+            adviceContent.value = data.responseData.translatedText;
+        })
 }
 
 const editarAdvice = (evento) => {
@@ -41,7 +27,6 @@ const editarAdvice = (evento) => {
     const adviceContent = tag.querySelector('p')
     const modal = document.querySelector('#edit-advice')
     modal.style.display = "flex"
-    console.log(modal)
 
     const h2 = modal.querySelector('h2')
     h2.textContent = adviceName.innerText
@@ -63,6 +48,21 @@ const editarAdvice = (evento) => {
         modal.style.display = "none"
     })
 
+}
+
+const apagarAdvice = (evento) => {
+    const tag = evento.target.closest('.ticker')
+    // removendo a div
+    tag.remove()
+
+    //removendo do local storege
+    //procurando o indice
+    const adviceIndex = conselhos.findIndex(elemento => elemento.id == tag.id)
+    //removendo o objeto
+    conselhos.splice(adviceIndex, 1)
+    //atualizando o local storege
+    localStorage.setItem("conselhos", JSON.stringify(conselhos))
+    
 }
 
 const adviceMouseEnter = (evento) => {
@@ -91,6 +91,9 @@ const atribuirEvento = () => {
         btn_remove.addEventListener('click', apagarAdvice)
         const btn_edit = elemento.querySelector('.btn-edit')
         btn_edit.addEventListener('click', editarAdvice)
+        const btn_translate = elemento.querySelector('.btn-translate')
+        btn_translate.addEventListener('click', translation)
+
 
         elemento.addEventListener("mouseenter", adviceMouseEnter)
         elemento.addEventListener("mouseleave", adviceMouseLeave)
@@ -156,6 +159,7 @@ function criarAdvice(adviceAtual) {
         <h2>ADVICE #${adviceAtual.idAdvice}</h2>
         <p>${adviceAtual.advice}</p>
         <div class="botoes">
+            <button class="btn-translate">translate</button>
             <button class="btn-edit">edit</button>
             <button class="btn-remove">remove</button>
         </div>

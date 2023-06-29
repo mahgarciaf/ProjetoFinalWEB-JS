@@ -157,7 +157,8 @@ form {
     display: none;
 }
 .botoes .btn-remove,
-.botoes .btn-edit {
+.botoes .btn-edit,
+.botoes .btn-translate {
     background-color: #000;
     color: #fff;
     width: 74px;
@@ -167,7 +168,8 @@ form {
     border: 1px solid white;
 }
 .botoes .btn-remove:hover,
-.botoes .btn-edit:hover {
+.botoes .btn-edit:hover,
+.botoes .btn-translate:hover {
     cursor: pointer;
     box-shadow: 2px 2px white;
 }
